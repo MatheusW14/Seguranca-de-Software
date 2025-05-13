@@ -10,33 +10,36 @@ CHAVE_FIXA = "zyxwvutsrqponmlkjihgfedcba"
 
 
 # 1. Função de criptografia
-def criptografar(texto: str, chave: str = CHAVE_FIXA) -> str:
+def criptografar(texto_claro: str, chave_cript: str = CHAVE_FIXA) -> str:
     """
     Criptografa um texto usando cifra de substituição.
     Chave deve conter 26 caracteres únicos.
     Mantém maiúsculas/minúsculas e caracteres não alfabéticos.
     """
-    chave = chave.lower()
-    if len(set(chave)) != TAMANHO_ALFABETO or len(chave) != TAMANHO_ALFABETO:
+    chave_cript = chave_cript.lower()
+    if (
+        len(set(chave_cript)) != TAMANHO_ALFABETO
+        or len(chave_cript) != TAMANHO_ALFABETO
+    ):
         raise ValueError("Chave inválida! Deve conter 26 caracteres únicos.")
 
     mapeamento = {}
-    for letra_original, letra_chave in zip(ALFABETO, chave):
+    for letra_original, letra_chave in zip(ALFABETO, chave_cript):
         # Mapeia minúsculas e maiúsculas
         mapeamento[letra_original] = letra_chave.lower()
         mapeamento[letra_original.upper()] = letra_chave.upper()
 
-    return "".join(mapeamento.get(c, c) for c in texto)
+    return "".join(mapeamento.get(c, c) for c in texto_claro)
 
 
 # 2. Função de descriptografia
-def descriptografar(texto_cifrado: str, chave: str) -> str:
+def descriptografar(texto_cifrado: str, chave_descript: str) -> str:
     """
     Descriptografa um texto usando a chave fornecida.
     """
-    chave = chave.lower()
+    chave_descript = chave_descript.lower()
     mapeamento_inverso = {}
-    for letra_original, letra_chave in zip(ALFABETO, chave):
+    for letra_original, letra_chave in zip(ALFABETO, chave_descript):
         mapeamento_inverso[letra_chave.lower()] = letra_original.lower()
         mapeamento_inverso[letra_chave.upper()] = letra_original.upper()
 
